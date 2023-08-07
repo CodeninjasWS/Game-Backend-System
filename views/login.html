@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Page</title>
+</head>
+<body>
+  <h1>Login Page</h1>
+  <form id="login-form">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+    <br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <br>
+    <button type="submit">Login</button>
+  </form>
+
+
+  <script>
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent form submission
+
+      var username = document.getElementById('username').value;
+      var password = document.getElementById('password').value;
+
+      // Create an object with the login data
+      var loginData = {
+        username: username,
+        password: password
+      };
+
+      // Make a POST request to the login endpoint
+      fetch('http://localhost:3000/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(loginData)
+      })
+      .then(function(response) {
+        if (response.ok) {
+          // Redirect to index.html after successful login
+          window.location.href = 'magic';
+        } else {
+          // Display an error message
+          alert('Invalid credentials. Please try again.');
+        }
+      })
+      .catch(function(error) {
+        console.error('Error:', error);
+      });
+    });
+  </script>
+</body>
+</html>

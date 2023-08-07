@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Mission Search</title>
+  <style>
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-gap: 20px;
+    }
+    .mission-card {
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 5px;
+    }
+    .mission-card h3 {
+      margin-top: 0;
+    }
+    .start-button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .start-button[disabled] {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <h1>Mission Search</h1>
+
+  <div>
+    <label for="searchInput">Search:</label>
+    <input type="text" id="searchInput" placeholder="Enter search query">
+    <button id="searchButton">Search</button>
+  </div>
+
+  <div>
+    <label for="userIdInput">User ID:</label>
+    <input type="text" id="userIdInput" placeholder="Enter user ID">
+  </div>
+
+  <div class="grid-container" id="missionGrid"></div>
+
+  <script>
+    document.getElementById("searchButton").addEventListener("click", function() {
+      const searchQuery = document.getElementById("searchInput").value;
+      const userId = document.getElementById("userIdInput").value;
+      const url = "http://localhost:3000/api/search?query=" + encodeURIComponent(searchQuery) + "&userId=" + encodeURIComponent(userId);
+      
+      fetch(url)
+        .then(response => response.json())
+        .then(data => displayMissions(data))
+        .catch(error => console.log(error));
+    });
+
+    function displayMissions(missions) {
+      const missionGrid = document.getElementById("missionGrid");
+      missionGrid.innerHTML = "";
+
+      missions.forEach(function(mission) {
+        const missionCard = document.createElement("div");
+        missionCard.classList.add("mission-card");
+
+        const missionTitle = document.createElement("h3");
+        missionTitle.textContent = mission.name;
+
+        const missionDescription = document.createElement("p");
+        missionDescription.textContent = mission.description;
+
+        const startButton = document.createElement("button");
+        startButton.classList.add("start-button");
+        startButton.textContent = "Start Mission";
+        startButton.addEventListener("click", function() {
+          startMission(mission.id);
+        });
+
+        // Check if the mission is upcoming and disable the button if true
+        if (mission.upcoming) {
+          startButton.setAttribute("disabled", "true");
+        }
+
+        missionCard.appendChild(missionTitle);
+        missionCard.appendChild(missionDescription);
+        missionCard.appendChild(startButton);
+
+        missionGrid.appendChild(missionCard);
+      });
+    }
+
+    function startMission(missionId) {
+  const userId = document.getElementById("userIdInput").value;
+
+  // Check if the userId is empty
+  if (!userId) {
+    alert("Please enter a user ID");
+    return;
+  }
+
+  const url = "http://localhost:3000/api/addmission";
+  const data = {
+    missionId: missionId,
+    playerId: parseInt(userId) // Convert userId to a number
+  };
+
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .then(result => {
+      console.log(result);
+      // Handle success or display a message to the user
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+  </script>
+</body>
+</html>

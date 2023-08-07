@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Leaderboard</title>
+  <style>
+    /* Reset some default styles */
+    body, html {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Container styles */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Heading styles */
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 30px;
+      color: #333;
+    }
+
+    /* Table styles */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      background-color: #fff;
+    }
+
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f5f5f5;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #666;
+    }
+
+    td {
+      color: #333;
+    }
+
+    /* Avatar styles */
+    .avatar-image {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Leaderboard</h1>
+    <table id="leaderboard-table">
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Name</th>
+          <th>Points</th>
+          <th>Avatar</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Fetch leaderboard data from the server
+    fetch('/api/leaderboards')
+      .then(response => response.json())
+      .then(data => {
+        const leaderboardTable = document.getElementById('leaderboard-table');
+        const leaderboardBody = leaderboardTable.querySelector('tbody');
+
+        // Iterate over the leaderboard entries and create table rows
+        data.forEach((entry, index) => {
+          const row = document.createElement('tr');
+
+          const rankCell = document.createElement('td');
+          rankCell.textContent = index + 1;
+          row.appendChild(rankCell);
+
+          const nameCell = document.createElement('td');
+          nameCell.textContent = entry.name;
+          row.appendChild(nameCell);
+
+          const pointsCell = document.createElement('td');
+          pointsCell.textContent = entry.points;
+          row.appendChild(pointsCell);
+
+          const avatarCell = document.createElement('td');
+          const avatarImage = document.createElement('img');
+          avatarImage.src = entry.avatar;
+          avatarImage.alt = entry.name;
+          avatarImage.classList.add('avatar-image'); // Added a CSS class to the image
+          avatarCell.appendChild(avatarImage);
+          row.appendChild(avatarCell);
+
+          leaderboardBody.appendChild(row);
+        });
+      })
+      .catch(error => console.log(error));
+  </script>
+</body>
+</html>

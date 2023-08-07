@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register</title>
+  <style>
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Register</h1>
+  <form id="registerForm">
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" id="username" required>
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" required>
+    </div>
+    <div>
+      <label for="name">Name:</label>
+      <input type="text" id="name" required>
+    </div>
+    <div>
+      <label for="age">Age:</label>
+      <input type="number" id="age" required>
+    </div>
+    <div>
+      <label for="gender">Gender:</label>
+      <select id="gender" required>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div>
+      <label for="skills">Skills:</label>
+      <input type="text" id="skills" required>
+    </div>
+    <div>
+      <label for="hobbies">Hobbies:</label>
+      <input type="text" id="hobbies" required>
+    </div>
+    <div>
+      <label for="school">School:</label>
+      <input type="text" id="school" required>
+    </div>
+    <div>
+      <label for="residentialArea">Residential Area:</label>
+      <input type="text" id="residentialArea" required>
+    </div>
+    <div>
+      <label for="passionateAbout">Passionate About:</label>
+      <input type="text" id="passionateAbout" required>
+    </div>
+    <div>
+      <label for="avatar">Avatar:</label>
+      <input type="file" id="avatar" accept="image/*" required>
+    </div>
+    <div>
+      <button type="submit">Register</button>
+    </div>
+  </form>
+
+  <div id="errorMessage" class="error"></div>
+
+  <script>
+    const registerForm = document.getElementById('registerForm');
+    const errorMessage = document.getElementById('errorMessage');
+
+    registerForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const name = document.getElementById('name').value;
+      const age = document.getElementById('age').value;
+      const gender = document.getElementById('gender').value;
+      const skills = document.getElementById('skills').value;
+      const hobbies = document.getElementById('hobbies').value;
+      const school = document.getElementById('school').value;
+      const residentialArea = document.getElementById('residentialArea').value;
+      const passionateAbout = document.getElementById('passionateAbout').value;
+      const avatar = document.getElementById('avatar').files[0];
+
+      const formData = new FormData();
+      formData.append('username', username);
+      formData.append('password', password);
+      formData.append('name', name);
+      formData.append('age', age);
+      formData.append('gender', gender);
+      formData.append('skills', skills);
+      formData.append('hobbies', hobbies);
+      formData.append('school', school);
+      formData.append('residentialArea', residentialArea);
+      formData.append('passionateAbout', passionateAbout);
+      formData.append('avatar', avatar);
+
+      fetch('/api/users', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => {
+        if (response.ok) {
+          window.location.href = '/'; // Redirect to dashboard on successful registration
+        } else {
+          response.json().then(data => {
+            errorMessage.textContent = data.error;
+          });
+        }
+      })
+      .catch(error => {
+        errorMessage.textContent = 'An error occurred during registration.';
+        console.error(error);
+      });
+    });
+  </script>
+</body>
+</html>

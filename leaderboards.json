@@ -1,0 +1,26 @@
+[
+  {
+    "id": "user1",
+    "name": "John Doe",
+    "points": 500,
+    "avatar": "avatar1.png"
+  },
+  {
+    "id": "user2",
+    "name": "Jane Smith",
+    "points": 400,
+    "avatar": "avatar2.png"
+  },
+  {
+    "id": "user1",
+    "name": "John Doe",
+    "points": 1000,
+    "avatar": "avatar1.png"
+  },
+  {
+    "id": "user2",
+    "name": "Jane Smith",
+    "points": 4000,
+    "avatar": "avatar2.png"
+  }
+]
