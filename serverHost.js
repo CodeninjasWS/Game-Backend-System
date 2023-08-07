@@ -158,9 +158,6 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'login.html'));
 });
 
-app.get('/logout', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views', 'logout.html'));
-});
 
 app.get('/index', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'index.html'));
@@ -173,9 +170,6 @@ app.get('/missions', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'missions.html'));
 });
 
-app.get('/nft', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views', 'nft.html'));
-});
 
 app.get('/leaderboard', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'leaderboard.html'));
@@ -190,7 +184,6 @@ app.get('/api/search', (req, res) => {
   const filteredMissions = missions.filter((mission) =>
     mission.keywords.some((keyword) => keyword.includes(query))
   );
-
   // Filter upcoming missions based on matching keywords
   const filteredUpcomingMissions = upcomingMissions.filter((mission) =>
     mission.keywords.some((keyword) => keyword.includes(query))

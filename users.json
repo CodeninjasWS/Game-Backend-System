@@ -1,35 +1,7 @@
 [
   {
-    "username": "john_doe",
-    "password": "$2a$10$YkO2qa9oXIUSMKu0Zw4sF.Yg6R1KoGwRTYcqboTMNyJyqAPsGplN2",
-    "name": "John Doe",
-    "age": 25,
-    "gender": "Male",
-    "skills": [
-      "programming",
-      "design"
-    ],
-    "hobbies": [
-      "reading",
-      "gaming"
-    ],
-    "school": "ABC University",
-    "residentialArea": "XYZ City",
-    "passionateAbout": "Technology",
-    "avatar": "avatar1.jpg",
-    "ongoingMissions": [
-      "mission1",
-      "mission2",
-      "upcoming1"
-    ],
-    "completedMissions": [
-      "mission1"
-    ],
-    "nftNumbers": [
-      1,
-      5,
-      9
-    ],
-    "id":"1"
+    "username": "test",
+    "password": "$2a$10$xDrUJ6J4UtM7iJk85J0GwuFSaeXHZZmZ6WIkofQD1Z5eLwW./z6PW",
+    "id": "1"
   }
 ]
