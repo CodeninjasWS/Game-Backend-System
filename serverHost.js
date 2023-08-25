@@ -32,10 +32,6 @@ app.get('/api/leaderboards', (req, res) => {
   res.json(sortedUsers);
 });
 
-app.get('/api/nfts', (req, res) => {
-  const nfts = JSON.parse(fs.readFileSync('./nfts.json'));
-  res.json(nfts);
-});
 
 app.get('/api/upcoming-missions', (req, res) => {
   const upcomingMissions = JSON.parse(fs.readFileSync('./upcomingMissions.json'));
@@ -261,6 +257,7 @@ app.post('/api/missions', (req, res) => {
 
   res.json({ message: 'Mission added successfully', mission: newMission });
 });
+
 app.post('/api/leaderboards', (req, res) => {
   const leaderboardData = req.body;
 
