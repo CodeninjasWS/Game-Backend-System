@@ -21,6 +21,11 @@ app.get('/api/missions', (req, res) => {
     res.json(missions);
   });
 
+  app.get('/api/messages', (req, res) => {
+    const messages = JSON.parse(fs.readFileSync('./messages.json'));
+    res.json(messages);
+  });
+
 app.get('/api/bounties', (req, res) => {
   const bounties = JSON.parse(fs.readFileSync('./bounties.json'));
   res.json(bounties);

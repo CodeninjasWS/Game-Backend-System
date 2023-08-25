@@ -1,0 +1,16 @@
+{
+    "success": true,
+    "messages": [
+      {
+        "title": "Whiteridge has opened!",
+        "published_at": "2017-09-08 09:36:25",
+        "body": "Welcome to Whiteridge! The small mountain town with lots of stuff for your skiing pleasure...",
+        "summary": "Today we're releasing a new level called Whiteridge.\r\n\r\nWhiteridge is an urban level with lots of jumps and features to hit.",
+        "category": "levels",
+        "alert": true,
+        "new": true,
+        "action": "",
+        "image": "https://url/to/file.dds"
+      }
+    ]
+  }

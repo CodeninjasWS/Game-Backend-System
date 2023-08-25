@@ -13,10 +13,10 @@ This repository contains a Node.js application that serves various API endpoints
     
     -   Description: Fetches a list of users sorted by their points in descending order.
     -   Response: Returns a JSON array of users.
-4.  **GET /api/nfts**
+4. **GET /message**
     
-    -   Description: Fetches a list of NFTs.
-    -   Response: Returns a JSON array of NFTs.
+    -   Description: Shows the most recent message added.
+
 5.  **GET /api/upcoming-missions**
     
     -   Description: Fetches a list of upcoming missions.
@@ -34,6 +34,7 @@ This repository contains a Node.js application that serves various API endpoints
 8.  **GET /dashboard**
     
     -   Description: Renders the user's dashboard view based on their logged-in state and user ID cookie.
+
 9.  **GET /api/users/:userId**
     
     -   Description: Fetches user profile data based on the provided `userId` parameter.
