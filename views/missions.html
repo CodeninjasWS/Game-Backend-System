@@ -4,22 +4,88 @@
   <meta charset="UTF-8">
   <title>Mission Search</title>
   <style>
+    :root {
+      --main-bg-color: #151638;
+      --primary-color: #12172c;
+      --secondary-color: #101632;
+      --similar-color-1: #2B2E4A;
+      --similar-color-2: #1E2133;
+      --similar-color-3: #12172c;
+    }
+
+    body {
+      background: linear-gradient(to bottom right, var(--main-bg-color), var(--primary-color), var(--secondary-color));
+      color: #ffffff;
+    }
+
+    /* Reset some default styles */
+    body, html {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Container styles */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Heading styles */
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 30px;
+    }
+
+    /* Search and input styles */
+    label {
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    input[type="text"] {
+      padding: 8px;
+      border: none;
+      border-radius: 5px;
+      background-color: var(--similar-color-2);
+      color: #ffffff;
+    }
+
+    button {
+      background-color: var(--similar-color-1);
+      color: #ffffff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* Mission card styles */
     .grid-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       grid-gap: 20px;
     }
+
     .mission-card {
-      border: 1px solid #ccc;
-      padding: 20px;
-      border-radius: 5px;
-    }
+  border: 1px solid #fff;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: var(--similar-color-2);
+}
+
+.mission-card.upcoming {
+  border: 2px solid #ffeb3b; /* Yellow border for upcoming missions */
+}
+
     .mission-card h3 {
       margin-top: 0;
     }
+
     .start-button {
-      background-color: #4CAF50;
-      color: white;
+      background-color: var(--similar-color-1);
+      color: #ffffff;
       border: none;
       padding: 10px 20px;
       text-align: center;
@@ -30,8 +96,9 @@
       cursor: pointer;
       border-radius: 5px;
     }
+
     .start-button[disabled] {
-      background-color: #ccc;
+      background-color: var(--similar-color-3);
       cursor: not-allowed;
     }
   </style>
@@ -52,7 +119,30 @@
 
   <div class="grid-container" id="missionGrid"></div>
 
+  
   <script>
+    // Function to load missions initially
+    function loadAllMissions() {
+      fetch("https://api.hungrygiraffe.xyz/api/allmissions")
+        .then(response => response.json())
+        .then(data => displayMissions(data))
+        .catch(error => console.log(error));
+    }
+
+    // Load all missions when the page loads
+    window.addEventListener("load", loadAllMissions);
+
+    // Your existing event listener for the search button
+    document.getElementById("searchButton").addEventListener("click", function() {
+      const searchQuery = document.getElementById("searchInput").value;
+      const userId = document.getElementById("userIdInput").value;
+      const url = "https://api.hungrygiraffe.xyz/api/search?query=" + encodeURIComponent(searchQuery) + "&userId=" + encodeURIComponent(userId);
+      
+      fetch(url)
+        .then(response => response.json())
+        .then(data => displayMissions(data))
+        .catch(error => console.log(error));
+    });
     document.getElementById("searchButton").addEventListener("click", function() {
       const searchQuery = document.getElementById("searchInput").value;
       const userId = document.getElementById("userIdInput").value;
@@ -65,38 +155,41 @@
     });
 
     function displayMissions(missions) {
-      const missionGrid = document.getElementById("missionGrid");
-      missionGrid.innerHTML = "";
+  const missionGrid = document.getElementById("missionGrid");
+  missionGrid.innerHTML = "";
 
-      missions.forEach(function(mission) {
-        const missionCard = document.createElement("div");
-        missionCard.classList.add("mission-card");
-
-        const missionTitle = document.createElement("h3");
-        missionTitle.textContent = mission.name;
-
-        const missionDescription = document.createElement("p");
-        missionDescription.textContent = mission.description;
-
-        const startButton = document.createElement("button");
-        startButton.classList.add("start-button");
-        startButton.textContent = "Start Mission";
-        startButton.addEventListener("click", function() {
-          startMission(mission.id);
-        });
-
-        // Check if the mission is upcoming and disable the button if true
-        if (mission.upcoming) {
-          startButton.setAttribute("disabled", "true");
-        }
-
-        missionCard.appendChild(missionTitle);
-        missionCard.appendChild(missionDescription);
-        missionCard.appendChild(startButton);
-
-        missionGrid.appendChild(missionCard);
-      });
+  missions.forEach(function(mission) {
+    const missionCard = document.createElement("div");
+    missionCard.classList.add("mission-card");
+    if (mission.upcoming) {
+      missionCard.classList.add("upcoming");
     }
+
+    const missionTitle = document.createElement("h3");
+    missionTitle.textContent = mission.name;
+
+    const missionDescription = document.createElement("p");
+    missionDescription.textContent = mission.description;
+
+    const startButton = document.createElement("button");
+    startButton.classList.add("start-button");
+    startButton.textContent = "Start Mission";
+    startButton.addEventListener("click", function() {
+      startMission(mission.id);
+    });
+
+    // Check if the mission is upcoming and disable the button if true
+    if (mission.upcoming) {
+      startButton.setAttribute("disabled", "true");
+    }
+
+    missionCard.appendChild(missionTitle);
+    missionCard.appendChild(missionDescription);
+    missionCard.appendChild(startButton);
+
+    missionGrid.appendChild(missionCard);
+  });
+}
 
     function startMission(missionId) {
   const userId = document.getElementById("userIdInput").value;

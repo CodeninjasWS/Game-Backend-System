@@ -189,7 +189,21 @@ app.get('/api/search', (req, res) => {
 
   res.json(searchResults);
 });
+app.get('/allmissions', (req, res) => {
+  const missions = JSON.parse(fs.readFileSync('/home/cnwestsprings/game-backend-system/missions.json'));
+  const upcomingMissions = JSON.parse(fs.readFileSync('/home/cnwestsprings/game-backend-system/upcomingMissions.json'));
 
+  const allMissions = missions.map(mission => {
+    const isUpcoming = upcomingMissions.some(upcoming => upcoming.id === mission.id);
+
+    return {
+      ...mission,
+      upcoming: isUpcoming
+    };
+  });
+
+  res.json(allMissions);
+});
 app.post('/api/addmission', (req, res) => {
   const { missionId, playerId } = req.body;
 
