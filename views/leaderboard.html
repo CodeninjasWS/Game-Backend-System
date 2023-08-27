@@ -75,7 +75,7 @@
 
   <script>
     // Fetch leaderboard data from the server
-    fetch('/api/leaderboards')
+    fetch('https://api.hungrygiraffe.xyz/api/leaderboards')
       .then(response => response.json())
       .then(data => {
         const leaderboardTable = document.getElementById('leaderboard-table');

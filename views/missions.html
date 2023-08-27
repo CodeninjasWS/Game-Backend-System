@@ -56,7 +56,7 @@
     document.getElementById("searchButton").addEventListener("click", function() {
       const searchQuery = document.getElementById("searchInput").value;
       const userId = document.getElementById("userIdInput").value;
-      const url = "http://localhost:3000/api/search?query=" + encodeURIComponent(searchQuery) + "&userId=" + encodeURIComponent(userId);
+      const url = "https://api.hungrygiraffe.xyz/api/search?query=" + encodeURIComponent(searchQuery) + "&userId=" + encodeURIComponent(userId);
       
       fetch(url)
         .then(response => response.json())
@@ -107,7 +107,7 @@
     return;
   }
 
-  const url = "http://localhost:3000/api/addmission";
+  const url = "https://api.hungrygiraffe.xyz/api/addmission";
   const data = {
     missionId: missionId,
     playerId: parseInt(userId) // Convert userId to a number

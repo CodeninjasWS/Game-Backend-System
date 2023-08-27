@@ -46,7 +46,7 @@ registerForm.addEventListener('submit', (event) => {
     password: password,
   };
 
-  fetch('/api/users', {
+  fetch('https://api.hungrygiraffe.xyz/api/users', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ registerForm.addEventListener('submit', (event) => {
   })
     .then((response) => {
       if (response.ok) {
-        window.location.href = '/'; // Redirect to dashboard on successful registration
+        window.location.href = '/dashboard.html'; // Redirect to dashboard on successful registration
       } else {
         response.json().then((data) => {
           errorMessage.textContent = data.error;
