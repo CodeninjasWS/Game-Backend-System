@@ -51,14 +51,18 @@ app.post('/api/users', async (req, res) => {
 
   const newUser = req.body;
 
-  // Check if the username already exists
-  const existingUser = users.find((user) => user.username === newUser.username);
-  if (existingUser) {
-    console.log('Username already exists');
-    return res.status(409).json({ error: 'Username already exists' });
-  }
-
   try {
+    // Read the existing users from the JSON file
+    const usersData = fs.readFileSync('/home/cnwestsprings/game-backend-system/users.json', 'utf8');
+    const users = JSON.parse(usersData);
+
+    // Check if the username already exists
+    const existingUser = users.find((user) => user.username === newUser.username);
+    if (existingUser) {
+      console.log('Username already exists');
+      return res.status(409).json({ error: 'Username already exists' });
+    }
+
     // Hash the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newUser.password, salt);
@@ -79,12 +83,12 @@ app.post('/api/users', async (req, res) => {
         return res.status(500).json({ error: 'Internal server error' });
       }
     });
-    
+
     console.log('User registration successful:', newUser);
-    
+
     res.json({ message: 'User registration successful' });
   } catch (error) {
-    console.error('Error hashing password:', error);
+    console.error('Error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
