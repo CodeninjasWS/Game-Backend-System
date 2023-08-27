@@ -1,5 +1,5 @@
 
-This repository contains a Node.js application that serves various API endpoints and provides a basic front-end for user registration and login. The application uses Express.js as the web server, and it includes features for managing missions, user data, leaderboards, and NFTs. Here is a list of the available endpoints:
+This repository contains a Node.js application that serves various API endpoints and provides a basic front-end for user registration and login. The application uses Express.js as the web server, and it includes features for managing missions, user data, and leaderboards. Here is a list of the available endpoints:
 
 1.  **GET /api/missions**
     
