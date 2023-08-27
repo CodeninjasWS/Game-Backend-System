@@ -5,100 +5,34 @@
   <meta charset="UTF-8">
   <title>Player Statistics</title>
   <link rel="stylesheet" href="style.min.css">
-  <style>
-    /* Reset default browser styles */
-    html, body, h1 {
-      margin: 0;
-      padding: 0;
-    }
-
-    /* Global styles */
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f2f2f2;
-      color: #333333;
-    }
-
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    h1 {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    #stats-container {
-      white-space: pre-wrap;
-      background-color: #ffffff;
-      padding: 20px;
-      border-radius: 4px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Styling for user statistics */
-    .stats-row {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
-
-    .stats-label {
-      font-weight: bold;
-      width: 150px;
-    }
-
-    .stats-value {
-      flex-grow: 1;
-      margin-left: 10px;
-    }
-
-    /* Error message styles */
-    .error-message {
-      color: red;
-      font-weight: bold;
-      margin-top: 20px;
-    }
-
-    /* Loader animation styles */
-    .loader {
-      display: inline-block;
-      width: 40px;
-      height: 40px;
-      border: 4px solid #f3f3f3;
-      border-top: 4px solid #3498db;
-      border-radius: 50%;
-      animation: spin 2s linear infinite;
-      margin-top: 20px;
-    }
-
-    @keyframes spin {
-      0% {
-        transform: rotate(0deg);
-      }
-
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-  </style>
-</head>
 <html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>HG - Login</title>
 
     
-<body>
-  <div class="container">
-    <h2 class="portal-title">HungryGiraffe Dashboard</h2>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="./IMPACT_files/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="https://assets.codeninjas.com/page-susi/assets/favicon.ico" rel="icon" type="image/x-icon">
+   <link href="css/login.css" rel="stylesheet" type="text/css">
+  <img data-tenant-branding-background="true" src="./IMPACT_files/main-bg.png" alt="Illustration">
+</head>
+  <div class="container unified_container" role="presentation">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="panel panel-default">
+          <div class="panel-body">
+          
+            <h2 class="portal-title">HungryGiraffe Games Dashboard</h2>
+            <div id="api" data-name="Unified">
+                <div id="stats-container">
+                    <!-- Statistics will be dynamically populated here -->
+                  </div>
 
-    <div id="stats-container">
-      <!-- Statistics will be dynamically populated here -->
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-
   <script>
     // Function to format the user data
     function formatUserData(user) {
@@ -162,6 +96,5 @@
       }
     });
   </script>
-</body>
-
-</html>
+  </html>
+  
