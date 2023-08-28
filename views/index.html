@@ -65,38 +65,40 @@
 
   <script>
     document.getElementById('localAccountForm').addEventListener('submit', function(event) {
-      event.preventDefault(); // Prevent form submission
+  event.preventDefault(); // Prevent form submission
 
-      var email = document.getElementById('username').value;
-      var password = document.getElementById('password').value;
+  var email = document.getElementById('username').value;
+  var password = document.getElementById('password').value;
 
-      // Create an object with the login data
-      var loginData = {
-        username: email,
-        password: password
-      };
+  // Create an object with the login data
+  var loginData = {
+    username: email,
+    password: password
+  };
 
-      // Make a POST request to the login endpoint
-      fetch('https://api.hungrygiraffe.xyz/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(loginData)
-      })
-      .then(function(response) {
-        if (response.ok) {
-          // Redirect to index.html after successful login
-           window.location.href = 'dashboard.html';
-        } else {
-          // Display an error message
-          alert('Invalid credentials. Please try again.');
-        }
-      })
-      .catch(function(error) {
-        console.error('Error:', error);
-      });
-    });
+  // Make a POST request to the login endpoint
+  fetch('https://api.hungrygiraffe.xyz/api/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include', // Include credentials in the fetch request
+    body: JSON.stringify(loginData)
+  })
+  .then(function(response) {
+    if (response.ok) {
+      // Redirect to dashboard.html after successful login
+      window.location.href = 'dashboard.html';
+    } else {
+      // Display an error message
+      alert('Invalid credentials. Please try again.');
+    }
+  })
+  .catch(function(error) {
+    console.error('Error:', error);
+  });
+});
+
   </script>
 </body>
 </html>

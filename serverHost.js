@@ -14,7 +14,12 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser.json());
 app.use(cors());
 
-
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://dashboard.hungrygiraffe.xyz'); // Replace with your actual login page URL
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 
 app.get('/api/missions', (req, res) => {
     const missions = JSON.parse(fs.readFileSync('/home/cnwestsprings/game-backend-system/missions.json'));
@@ -114,7 +119,10 @@ app.post('/api/login', async (req, res) => {
     console.log('Login successful');
     res.cookie('userId', user.id, {
       maxAge: 24 * 60 * 60 * 1000, // Set the cookie expiration time (e.g., 24 hours)
+      sameSite: 'none',
+      secure: true
     });
+    
 
   });
   
