@@ -119,7 +119,18 @@ app.post('/api/login', async (req, res) => {
     sameSite: 'none' // Allows cross-origin requests
   });
   res.json({ message: 'Login successful' });
+     // Load users from the JSON file on server start
+  fs.readFile('./users.json', 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error reading users file:', err);
+    } else {
+      users = JSON.parse(data);
+      console.log('Users loaded successfully');
+    }
+  });
+
 });
+ 
 
 
 
