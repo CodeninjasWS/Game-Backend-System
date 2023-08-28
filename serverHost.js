@@ -115,13 +115,9 @@ app.post('/api/login', async (req, res) => {
       console.log('Invalid password');
       return res.status(401).json({ error: 'Invalid password' });
     }
-  return res.status(200).json({ message: 'success!!', userid: user.id });
     console.log('Login successful');
-    res.cookie('userId', user.id, {
-      maxAge: 24 * 60 * 60 * 1000, // Set the cookie expiration time (e.g., 24 hours)
-      sameSite: 'none',
-      secure: true
-    });
+    res.setHeader("Set-Cookie", `userId=${userid}; Domain=hungrygiraffe.xyz Secure SameSite=Lax`);
+  return res.status(200).json({ message: 'success!!', userid: user.id });
     
 
   });
