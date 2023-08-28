@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 // Read the input JSON file
-fs.readFile('input.json', 'utf8', (err, data) => {
+fs.readFile('inputleaderboard.json', 'utf8', (err, data) => {
   if (err) {
     console.error('Error reading the input JSON file:', err);
     return;
