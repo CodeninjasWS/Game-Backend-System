@@ -94,32 +94,40 @@ app.post('/api/users', async (req, res) => {
 });
 
 app.post('/api/login', async (req, res) => {
-  console.log('Received login request:', req.body);
+    console.log('Received login request:', req.body);
+  
+    const { username, password } = req.body;
+  
+    // Check if the user exists
+    const user = users.find((user) => user.username === username);
+    if (!user) {
+      console.log('User not found');
+      return res.status(404).json({ error: 'User not found' });
+    }
+    // Check if the password is correct
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword) {
+      console.log('Invalid password');
+      return res.status(401).json({ error: 'Invalid password' });
+    }
+  return res.status(200).json({ message: 'success!!', userid: user.id });
+    console.log('Login successful');
+    res.cookie('userId', user.id, {
+      maxAge: 24 * 60 * 60 * 1000, // Set the cookie expiration time (e.g., 24 hours)
+    });
 
-  const { username, password } = req.body;
-
-  // Check if the user exists
-  const user = users.find((user) => user.username === username);
-  if (!user) {
-    console.log('User not found');
-    return res.status(404).json({ error: 'User not found' });
-  }
-  // Check if the password is correct
-  const validPassword = await bcrypt.compare(password, user.password);
-  if (!validPassword) {
-    console.log('Invalid password');
-    return res.status(401).json({ error: 'Invalid password' });
-  }
-
-  console.log('Login successful');
-  res.cookie('userId', user.id, {
-    maxAge: 24 * 60 * 60 * 1000, // Set the cookie expiration time (e.g., 24 hours)
-    httpOnly: true,  // Recommended for security
-    secure: true,    // Set to true when using HTTPS
-    sameSite: 'none' // Allows cross-origin requests
   });
-  res.json({ message: 'Login successful' });
-});
+  
+  // Load users from the JSON file on server start
+  fs.readFile('./users.json', 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error reading users file:', err);
+    } else {
+      users = JSON.parse(data);
+      console.log('Users loaded successfully');
+    }
+  });
+ 
 
 
 
