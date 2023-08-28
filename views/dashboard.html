@@ -62,7 +62,9 @@
       font-weight: bold;
       margin-top: 20px;
     }
-
+    a {
+      color: purple;
+    }
     .loader {
       display: inline-block;
       width: 40px;
@@ -83,7 +85,7 @@
 
     /* Additional styling for links */
     .dashboard-link {
-      color: #ffffff;
+      color: #ae89ff;
       text-decoration: none;
       margin-right: 20px;
     }
@@ -183,9 +185,9 @@ function formatMessagesData(messagesData) {
   for (const message of messagesData.messages) {
     formattedMessages += `
       <div class="message">
-        <div class="message-title">${message.title}</div>
-        <div class="message-published">${message.published_at}</div>
-        <div class="message-body">${message.body}</div>
+        <div class="message-title">${message.title}</div><br>
+        <div class="message-published">${message.published_at}</div><br>
+        <div class="message-body">${message.body}</div><br><br><br>
       </div>
     `;
   }

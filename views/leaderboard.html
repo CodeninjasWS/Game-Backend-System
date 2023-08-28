@@ -91,41 +91,69 @@
   </div>
 
   <script>
-    // Fetch leaderboard data from the server
-    fetch('https://api.hungrygiraffe.xyz/api/leaderboards')
-      .then(response => response.json())
-      .then(data => {
-        const leaderboardTable = document.getElementById('leaderboard-table');
-        const leaderboardBody = leaderboardTable.querySelector('tbody');
-
-        // Iterate over the leaderboard entries and create table rows
-        data.forEach((entry, index) => {
-          const row = document.createElement('tr');
-
-          const rankCell = document.createElement('td');
-          rankCell.textContent = index + 1;
-          row.appendChild(rankCell);
-
-          const nameCell = document.createElement('td');
-          nameCell.textContent = entry.name;
-          row.appendChild(nameCell);
-
-          const pointsCell = document.createElement('td');
-          pointsCell.textContent = entry.points;
-          row.appendChild(pointsCell);
-
-          const avatarCell = document.createElement('td');
-          const avatarImage = document.createElement('img');
-          avatarImage.src = entry.avatar;
-          avatarImage.alt = entry.name;
-          avatarImage.classList.add('avatar-image'); // Added a CSS class to the image
-          avatarCell.appendChild(avatarImage);
-          row.appendChild(avatarCell);
-
-          leaderboardBody.appendChild(row);
-        });
-      })
-      .catch(error => console.log(error));
+    let currentPage = 1;
+    const entriesPerPage = 25;
+    const leaderboardTable = document.getElementById('leaderboard-table');
+    const leaderboardBody = leaderboardTable.querySelector('tbody');
+    const loadMoreButton = document.createElement('button');
+    loadMoreButton.textContent = 'Load More';
+    loadMoreButton.style.display = 'none'; // Hide the button initially
+    loadMoreButton.addEventListener('click', loadMoreEntries);
+  
+    function loadMoreEntries() {
+      fetch(`https://api.hungrygiraffe.xyz/api/leaderboards?page=${currentPage}&perPage=${entriesPerPage}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.length === 0) {
+            loadMoreButton.style.display = 'none';
+            return;
+          }
+  
+          data.forEach((entry, index) => {
+            const row = document.createElement('tr');
+  
+            const rankCell = document.createElement('td');
+            rankCell.textContent = (currentPage - 1) * entriesPerPage + index + 1;
+            row.appendChild(rankCell);
+  
+            const nameCell = document.createElement('td');
+            nameCell.textContent = entry.name;
+            row.appendChild(nameCell);
+  
+            const pointsCell = document.createElement('td');
+            pointsCell.textContent = entry.points;
+            row.appendChild(pointsCell);
+  
+            const avatarCell = document.createElement('td');
+            const avatarImage = document.createElement('img');
+            avatarImage.src = entry.avatar;
+            avatarImage.alt = entry.name;
+            avatarImage.classList.add('avatar-image');
+            avatarCell.appendChild(avatarImage);
+            row.appendChild(avatarCell);
+  
+            leaderboardBody.appendChild(row);
+          });
+  
+          currentPage++;
+          
+          // Show the "Load More" button if there are more entries
+          if (data.length === entriesPerPage) {
+            loadMoreButton.style.display = 'block';
+          } else {
+            loadMoreButton.style.display = 'none';
+          }
+        })
+        .catch(error => console.log(error));
+    }
+  
+    // Append the "Load More" button at the bottom of the page
+    const container = document.querySelector('.container');
+    container.appendChild(loadMoreButton);
+  
+    // Initialize by loading the first batch of entries
+    loadMoreEntries();
   </script>
+  
 </body>
 </html>
