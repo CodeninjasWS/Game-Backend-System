@@ -116,7 +116,6 @@ app.post('/api/login', async (req, res) => {
       return res.status(401).json({ error: 'Invalid password' });
     }
     console.log('Login successful');
-    res.setHeader("Set-Cookie", `userId=${userid}; Domain=hungrygiraffe.xyz Secure SameSite=Lax`);
   return res.status(200).json({ message: 'success!!', userid: user.id });
     
 
