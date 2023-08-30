@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5V3HV4NYCM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-5V3HV4NYCM');
+</script>
   <title>HungryGiraffe Dashboard</title>
   <style>
     :root {
@@ -202,17 +211,8 @@ function displayData(containerId, formattedData) {
 }
 
 function getUserIdFromCookie() {
-  const cookies = document.cookie.split(';');
-
-  for (const cookie of cookies) {
-    const [name, value] = cookie.trim().split('=');
-
-    if (name === 'userId') {
-      return value;
-    }
-  }
-
-  return null;
+    value = document.cookie.;
+    return value;
 }
 
   </script>
