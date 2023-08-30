@@ -6,6 +6,7 @@ const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcryptjs');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 const app = express();
 app.use(cookieParser());
@@ -14,12 +15,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://dashboard.hungrygiraffe.xyz'); // Replace with your actual login page URL
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
+
+app.use(cors({
+  origin: 'https://dashboard.hungrygiraffe.xyz', // Replace with your frontend's URL
+  credentials: true, // Allow cookies and authentication headers to be included
+}));
 
 app.get('/api/missions', (req, res) => {
     const missions = JSON.parse(fs.readFileSync('/home/cnwestsprings/game-backend-system/missions.json'));
@@ -116,10 +116,6 @@ app.post('/api/login', async (req, res) => {
       return res.status(401).json({ error: 'Invalid password' });
     }
     console.log('Login successful');
-<<<<<<< HEAD
-    // res.setHeader("Set-Cookie", `userId=${user.id}; Domain=hungrygiraffe.xyz Secure SameSite=Lax`);
-=======
->>>>>>> b67282df0fc7996b1a2be56a4108f1a360d291b9
   return res.status(200).json({ message: 'success!!', userid: user.id });
     
 
