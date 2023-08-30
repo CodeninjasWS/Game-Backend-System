@@ -12,12 +12,11 @@ app.use(cookieParser());
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser.json());
-app.use(cors());
 
-
+// Enable CORS
 app.use(cors({
   origin: 'https://dashboard.hungrygiraffe.xyz', // Replace with your frontend's URL
-  credentials: true, // Allow cookies and authentication headers to be included
+  credentials: true,
 }));
 
 app.get('/api/missions', (req, res) => {
