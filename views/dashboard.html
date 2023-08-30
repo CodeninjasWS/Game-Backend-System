@@ -136,85 +136,83 @@
   </div>
 
   <script>
- document.addEventListener('DOMContentLoaded', () => {
-  const userId = getUserIdFromCookie();
+    document.addEventListener('DOMContentLoaded', () => {
+      const userId = getUserIdFromCookie();
 
-  if (userId) {
-    fetchAndDisplayUserData(userId);
-  } else {
-    console.error('User ID not found in cookie');
-    fetchAndDisplayUserData("null");
-  }
-});
-
-function fetchAndDisplayUserData(userId) {
-  const userUrl = `https://api.hungrygiraffe.xyz/api/users/${userId}`;
-  const messagesUrl = `https://api.hungrygiraffe.xyz/api/messages`;
-
-  Promise.all([fetchData(userUrl), fetchData(messagesUrl)])
-    .then(([userData, messagesData]) => {
-      const formattedUserData = formatUserData(userData);
-      const formattedMessagesData = formatMessagesData(messagesData);
-
-      displayData('stats-container', formattedUserData);
-      displayData('message-container', formattedMessagesData);
-    })
-    .catch(error => {
-      console.error('Error fetching data:', error);
+      if (userId) {
+        fetchAndDisplayUserData(userId);
+      } else {
+        console.error('User ID not found in cookie');
+        fetchAndDisplayUserData("null");
+      }
     });
-}
 
-function fetchData(url) {
-  return fetch(url)
-    .then(response => response.json())
-    .catch(error => {
-      console.error(`Error fetching data from ${url}:`, error);
-      throw error;
-    });
-}
-
-function formatUserData(user) {
-  let formattedData = '';
-
-  for (const key in user) {
-    if (user.hasOwnProperty(key)) {
-      formattedData += `<div class="stats-row">
-                          <div class="stats-label">${key}:</div>
-                          <div class="stats-value">${JSON.stringify(user[key])}</div>
-                        </div>`;
+    function getUserIdFromCookie() {
+      return document.cookie;
     }
-  }
 
-  return formattedData;
-}
+    function fetchAndDisplayUserData(userId) {
+      const userUrl = `https://api.hungrygiraffe.xyz/api/users/${userId}`;
+      const messagesUrl = `https://api.hungrygiraffe.xyz/api/messages`;
 
-function formatMessagesData(messagesData) {
-  let formattedMessages = '';
+      Promise.all([fetchData(userUrl), fetchData(messagesUrl)])
+        .then(([userData, messagesData]) => {
+          const formattedUserData = formatUserData(userData);
+          const formattedMessagesData = formatMessagesData(messagesData);
 
-  for (const message of messagesData.messages) {
-    formattedMessages += `
-      <div class="message">
-        <div class="message-title">${message.title}</div><br>
-        <div class="message-published">${message.published_at}</div><br>
-        <div class="message-body">${message.body}</div><br><br><br>
-      </div>
-    `;
-  }
+          displayData('stats-container', formattedUserData);
+          displayData('message-container', formattedMessagesData);
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    }
 
-  return formattedMessages;
-}
+    function fetchData(url) {
+      return fetch(url)
+        .then(response => response.json())
+        .catch(error => {
+          console.error(`Error fetching data from ${url}:`, error);
+          throw error;
+        });
+    }
 
+    function formatUserData(user) {
+      let formattedData = '';
 
-function displayData(containerId, formattedData) {
-  const container = document.getElementById(containerId);
-  container.innerHTML = formattedData;
-}
+      for (const key in user) {
+        if (user.hasOwnProperty(key)) {
+          formattedData += `<div class="stats-row">
+                              <div class="stats-label">${key}:</div>
+                              <div class="stats-value">${JSON.stringify(user[key])}</div>
+                            </div>`;
+        }
+      }
 
-function getUserIdFromCookie() {
-    value = document.cookie.;
-    return value;
-}
+      return formattedData;
+    }
 
+    function formatMessagesData(messagesData) {
+      let formattedMessages = '';
+
+      for (const message of messagesData.messages) {
+        formattedMessages += `
+          <div class="message">
+            <div class="message-title">${message.title}</div>
+            <div class="message-published">${message.published_at}</div>
+            <div class="message-body">${message.body}</div>
+          </div>`;
+      }
+
+      return formattedMessages;
+    }
+
+    function displayData(containerId, formattedData) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = formattedData;
+    }
   </script>
+</body>
+</html>
 </body>
 </html>
