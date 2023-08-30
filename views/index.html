@@ -77,7 +77,7 @@
   };
 
   // Make a POST request to the login endpoint
-  fetch('https://api.hungrygiraffe.xyz/api/login', {
+  fetch('/api/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -88,7 +88,10 @@
   .then(function(response) {
     if (response.ok) {
       // Redirect to dashboard.html after successful login
-      window.location.href = 'dashboard.html';
+      response.json().then(va=>{
+        document.cookie = `userId=${va.userId};max-age=31536000;secure`;
+        window.location.href = 'dashboard.html';
+      });
     } else {
       // Display an error message
       alert('Invalid credentials. Please try again.');
