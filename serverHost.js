@@ -13,11 +13,13 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser.json());
 
-// Enable CORS
 app.use(cors({
-  origin: 'https://dashboard.hungrygiraffe.xyz', // Replace with your frontend's URL
   credentials: true,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  optionsSuccessStatus: 204,
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+
 
 app.get('/api/missions', (req, res) => {
     const missions = JSON.parse(fs.readFileSync('/home/cnwestsprings/game-backend-system/missions.json'));
@@ -367,6 +369,34 @@ app.post('/api/add-balance', (req, res) => {
   fs.writeFileSync('/home/cnwestsprings/game-backend-system/users.json', JSON.stringify(usersData, null, 2));
 
   res.json({ message: 'Balance added successfully', user });
+});
+app.post('/api/update-points', (req, res) => {
+  const { id, points } = req.body;
+
+  // Read the leaderboard data from the JSON file
+  const leaderboardData = JSON.parse(fs.readFileSync('leaderboard.json', 'utf8'));
+
+  // Find the user by their ID
+  const user = leaderboardData.find((user) => user.id === id);
+
+  if (!user) {
+    // If user doesn't exist, create a new user
+    const newUser = {
+      id,
+      points,
+      name: '', // Provide the name as needed
+      avatar: '', // Provide the avatar URL as needed
+    };
+    leaderboardData.push(newUser);
+  } else {
+    // Update the user's points
+    user.points += points;
+  }
+
+  // Save the updated leaderboard data back to the JSON file
+  fs.writeFileSync('leaderboard.json', JSON.stringify(leaderboardData, null, 2));
+
+  res.json({ message: 'Points updated successfully' });
 });
 
 
