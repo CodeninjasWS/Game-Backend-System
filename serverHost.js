@@ -13,10 +13,10 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser.json());
 
-// app.use(cors({
-//   origin: 'https://dashboard.hungrygiraffe.xyz', // Replace with your frontend's URL
-//   credentials: true,
-// }));
+app.use(cors({
+  origin: 'https://dashboard.hungrygiraffe.xyz', // Replace with your frontend's URL
+  credentials: true,
+}));
 
 
 app.get('/api/missions', (req, res) => {
