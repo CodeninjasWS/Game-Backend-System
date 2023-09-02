@@ -22,29 +22,29 @@ app.use(cors({
 
 
 app.get('/api/missions', (req, res) => {
-    const missions = JSON.parse(fs.readFileSync('/home/cnwestsprings/game-backend-system/missions.json'));
+    const missions = JSON.parse(fs.readFileSync('missions.json'));
     res.json(missions);
   });
 
   app.get('/api/messages', (req, res) => {
-    const messages = JSON.parse(fs.readFileSync('/home/cnwestsprings/game-backend-system/messages.json'));
+    const messages = JSON.parse(fs.readFileSync('messages.json'));
     res.json(messages);
   });
 
 app.get('/api/bounties', (req, res) => {
-  const bounties = JSON.parse(fs.readFileSync('/home/cnwestsprings/game-backend-system/bounties.json'));
+  const bounties = JSON.parse(fs.readFileSync('bounties.json'));
   res.json(bounties);
 });
 
 app.get('/api/leaderboards', (req, res) => {
-  const users = JSON.parse(fs.readFileSync('/home/cnwestsprings/game-backend-system/leaderboards.json'));
+  const users = JSON.parse(fs.readFileSync('leaderboards.json'));
   const sortedUsers = users.sort((a, b) => b.points - a.points);
   res.json(sortedUsers);
 });
 
 
 app.get('/api/upcoming-missions', (req, res) => {
-  const upcomingMissions = JSON.parse(fs.readFileSync('/home/cnwestsprings/game-backend-system/upcomingMissions.json'));
+  const upcomingMissions = JSON.parse(fs.readFileSync('upcomingMissions.json'));
   res.json(upcomingMissions);
 });
 
@@ -58,7 +58,7 @@ app.post('/api/users', async (req, res) => {
 
   try {
     // Read the existing users from the JSON file
-    const usersData = fs.readFileSync('/home/cnwestsprings/game-backend-system/users.json', 'utf8');
+    const usersData = fs.readFileSync('users.json', 'utf8');
     const users = JSON.parse(usersData);
 
     // Check if the username already exists
@@ -82,7 +82,7 @@ app.post('/api/users', async (req, res) => {
     users.push(newUser);
 
     // Save the updated users array to the JSON file
-    fs.writeFile('/home/cnwestsprings/game-backend-system/users.json', JSON.stringify(users, null, 2), (err) => {
+    fs.writeFile('users.json', JSON.stringify(users, null, 2), (err) => {
       if (err) {
         console.error('Error writing users file:', err);
         return res.status(500).json({ error: 'Internal server error' });
@@ -149,7 +149,7 @@ app.post('/api/login', async (req, res) => {
   
 
 app.get('/api/users/:userId', (req, res) => {
-  const users = JSON.parse(fs.readFileSync('/home/cnwestsprings/game-backend-system/users.json'));
+  const users = JSON.parse(fs.readFileSync('users.json'));
   const userId = req.params.userId;
   const user = users.find((user) => user.id === userId);
 
@@ -187,8 +187,8 @@ app.get('/leaderboard', (req, res) => {
 
 app.get('/api/search', (req, res) => {
   const { query } = req.query;
-  const missions = JSON.parse(fs.readFileSync('/home/cnwestsprings/game-backend-system/missions.json'));
-  const upcomingMissions = JSON.parse(fs.readFileSync('/home/cnwestsprings/game-backend-system/upcomingMissions.json'));
+  const missions = JSON.parse(fs.readFileSync('missions.json'));
+  const upcomingMissions = JSON.parse(fs.readFileSync('upcomingMissions.json'));
 
   // Filter missions based on matching keywords
   const filteredMissions = missions.filter((mission) =>
@@ -205,8 +205,8 @@ app.get('/api/search', (req, res) => {
   res.json(searchResults);
 });
 app.get('/api/allmissions', (req, res) => {
-  const missions = JSON.parse(fs.readFileSync('/home/cnwestsprings/game-backend-system/missions.json'));
-  const upcomingMissions = JSON.parse(fs.readFileSync('/home/cnwestsprings/game-backend-system/upcomingMissions.json'));
+  const missions = JSON.parse(fs.readFileSync('missions.json'));
+  const upcomingMissions = JSON.parse(fs.readFileSync('upcomingMissions.json'));
 
   const allMissions = missions.map(mission => {
     const isUpcoming = upcomingMissions.some(upcoming => upcoming.id === mission.id);
@@ -223,7 +223,7 @@ app.post('/api/addmission', (req, res) => {
   const { missionId, playerId } = req.body;
 
   // Read the users from the JSON file
-  const users = JSON.parse(fs.readFileSync('/home/cnwestsprings/game-backend-system/users.json'));
+  const users = JSON.parse(fs.readFileSync('users.json'));
 
   // Find the user by ID
   const user = users.find((user) => user.id === playerId);
@@ -237,7 +237,7 @@ app.post('/api/addmission', (req, res) => {
   user.ongoingMissions.push(missionId);
 
   // Save the updated users array to the JSON file
-  fs.writeFileSync('/home/cnwestsprings/game-backend-system/users.json', JSON.stringify(users, null, 2));
+  fs.writeFileSync('users.json', JSON.stringify(users, null, 2));
 
   res.json({ message: 'Mission added to player' });
 });
@@ -246,7 +246,7 @@ app.post('/api/completemission', (req, res) => {
   const { missionId, playerId } = req.body;
 
   // Read the users from the JSON file
-  let users = JSON.parse(fs.readFileSync('/home/cnwestsprings/game-backend-system/users.json'));
+  let users = JSON.parse(fs.readFileSync('users.json'));
 
   // Find the user by ID
   const userIndex = users.findIndex((user) => user.id === playerId);
@@ -263,7 +263,7 @@ app.post('/api/completemission', (req, res) => {
   users[userIndex].completedMissions.push(missionId);
 
   // Save the updated users array to the JSON file
-  fs.writeFileSync('/home/cnwestsprings/game-backend-system/users.json', JSON.stringify(users, null, 2));
+  fs.writeFileSync('users.json', JSON.stringify(users, null, 2));
 
   res.json({ message: 'Mission added to player' });
 });
@@ -272,7 +272,7 @@ app.post('/api/missions', (req, res) => {
   const newMission = req.body;
 
   // Read the missions from the JSON file
-  const missions = JSON.parse(fs.readFileSync('/home/cnwestsprings/game-backend-system/missions.json'));
+  const missions = JSON.parse(fs.readFileSync('missions.json'));
 
   // Assign a unique ID to the new mission
   newMission.id = uuidv4();
@@ -281,7 +281,7 @@ app.post('/api/missions', (req, res) => {
   missions.push(newMission);
 
   // Save the updated missions array to the JSON file
-  fs.writeFileSync('/home/cnwestsprings/game-backend-system/missions.json', JSON.stringify(missions, null, 2));
+  fs.writeFileSync('missions.json', JSON.stringify(missions, null, 2));
 
   res.json({ message: 'Mission added successfully', mission: newMission });
 });
@@ -292,13 +292,13 @@ app.post('/api/leaderboards', (req, res) => {
   // Assuming the leaderboardData is an array of leaderboard entries
 
   // Read the existing leaderboard data from a file or database
-  const existingData = JSON.parse(fs.readFileSync('/home/cnwestsprings/game-backend-system/leaderboards.json'));
+  const existingData = JSON.parse(fs.readFileSync('leaderboards.json'));
 
   // Append the new data to the existing leaderboard
   const updatedData = existingData.concat(leaderboardData);
 
   // Update the leaderboard in the server's memory or database
-  fs.writeFileSync('/home/cnwestsprings/game-backend-system/leaderboards.json', JSON.stringify(updatedData, null, 2));
+  fs.writeFileSync('leaderboards.json', JSON.stringify(updatedData, null, 2));
 
   // Send a success response
   res.json({ message: 'Leaderboard updated successfully' });
@@ -308,7 +308,7 @@ app.post('/api/leaderboards', (req, res) => {
 
 
 app.get('/api/upcoming-missions', (req, res) => {
-  const upcomingMissions = JSON.parse(fs.readFileSync('/home/cnwestsprings/game-backend-system/upcomingMissions.json'));
+  const upcomingMissions = JSON.parse(fs.readFileSync('upcomingMissions.json'));
   res.json(upcomingMissions);
 });
 
@@ -316,7 +316,7 @@ app.post('/api/upcoming-missions', (req, res) => {
   const newMission = req.body;
 
   // Read the upcoming missions from the JSON file
-  const upcomingMissions = JSON.parse(fs.readFileSync('/home/cnwestsprings/game-backend-system/upcomingMissions.json'));
+  const upcomingMissions = JSON.parse(fs.readFileSync('upcomingMissions.json'));
 
   // Assign a unique ID to the new mission
   newMission.id = uuidv4();
@@ -325,7 +325,7 @@ app.post('/api/upcoming-missions', (req, res) => {
   upcomingMissions.push(newMission);
 
   // Save the updated upcoming missions array to the JSON file
-  fs.writeFileSync('/home/cnwestsprings/game-backend-system/upcomingMissions.json', JSON.stringify(upcomingMissions, null, 2));
+  fs.writeFileSync('upcomingMissions.json', JSON.stringify(upcomingMissions, null, 2));
 
   res.json({ message: 'Upcoming mission added successfully', mission: newMission });
 });
@@ -334,8 +334,8 @@ app.post('/api/add-balance', (req, res) => {
   const { username, code } = req.body;
 
   // Read the codes and users data from JSON files
-  const codesData = JSON.parse(fs.readFileSync('/home/cnwestsprings/game-backend-system/codes.json', 'utf8'));
-  const usersData = JSON.parse(fs.readFileSync('/home/cnwestsprings/game-backend-system/users.json', 'utf8'));
+  const codesData = JSON.parse(fs.readFileSync('codes.json', 'utf8'));
+  const usersData = JSON.parse(fs.readFileSync('users.json', 'utf8'));
 
   // Find the user by username
   const user = usersData.find((user) => user.id === username);
@@ -365,8 +365,8 @@ app.post('/api/add-balance', (req, res) => {
   codeEntry.used = true;
 
   // Save the updated data back to the JSON files
-  fs.writeFileSync('/home/cnwestsprings/game-backend-system/codes.json', JSON.stringify(codesData, null, 2));
-  fs.writeFileSync('/home/cnwestsprings/game-backend-system/users.json', JSON.stringify(usersData, null, 2));
+  fs.writeFileSync('codes.json', JSON.stringify(codesData, null, 2));
+  fs.writeFileSync('users.json', JSON.stringify(usersData, null, 2));
 
   res.json({ message: 'Balance added successfully', user });
 });
