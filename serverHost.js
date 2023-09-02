@@ -398,6 +398,34 @@ app.post('/api/update-points', (req, res) => {
 
   res.json({ message: 'Points updated successfully' });
 });
+app.post('/api/subtract-balance', (req, res) => {
+  const { userId, amount } = req.body;
+
+  // Read the users data from JSON file
+  const usersData = JSON.parse(fs.readFileSync('users.json', 'utf8'));
+
+  // Find the user by userId
+  const user = usersData.find((user) => user.id === userId);
+
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+
+  // Convert balance to a number (assuming balance is stored as a number)
+  const balance = parseFloat(user.balance);
+
+  if (balance >= amount) {
+    // Subtract the specified amount from the balance
+    user.balance = balance - amount;
+
+    // Save the updated data back to the JSON file
+    fs.writeFileSync('users.json', JSON.stringify(usersData, null, 2));
+
+    return res.json({ success: true });
+  } else {
+    return res.status(400).json({ error: 'Insufficient balance' });
+  }
+});
 
 
 
