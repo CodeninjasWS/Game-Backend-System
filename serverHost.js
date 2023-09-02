@@ -14,10 +14,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser.json());
 
 app.use(cors({
+  origin: 'https://dashboard.hungrygiraffe.xyz', // Replace with your frontend's URL
   credentials: true,
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  optionsSuccessStatus: 204,
-  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 
