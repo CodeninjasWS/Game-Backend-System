@@ -336,7 +336,7 @@ app.post('/api/add-balance', (req, res) => {
   const usersData = JSON.parse(fs.readFileSync('/home/cnwestsprings/game-backend-system/users.json', 'utf8'));
 
   // Find the user by username
-  const user = usersData.find((user) => user.username === username);
+  const user = usersData.find((user) => user.id === username);
 
   if (!user) {
     return res.status(404).json({ error: 'User not found' });

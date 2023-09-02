@@ -133,6 +133,14 @@
 
       </div>
     </div>
+    <div id="code-form">
+      <h3>Enter a Code:</h3>
+      <form id="code-input-form">
+        <input type="text" id="code-input" placeholder="Enter your code">
+        <button type="button" onclick="checkCode()">Check Code</button>
+      </form>
+      <div id="code-result"></div>
+    </div>
   </div>
 
   <script>
@@ -219,6 +227,38 @@
       const container = document.getElementById(containerId);
       container.innerHTML = formattedData;
     }
+    function checkCode() {
+  const codeInput = document.getElementById('code-input').value;
+  const codeResult = document.getElementById('code-result');
+  const userId = getUserIdFromCookie(); // Get the user's ID from the cookie
+
+  // Create a data object to send in the request body
+  const data = {
+    username: userId, // Send the user's ID as the username
+    code: codeInput,
+  };
+
+  // Send the data to the server for code validation
+  fetch('/api/add-balance', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        codeResult.innerHTML = 'Success! Balance added.';
+      } else {
+        codeResult.innerHTML = 'Invalid code or user not found.';
+      }
+    })
+    .catch(error => {
+      console.error('Error checking code:', error);
+      codeResult.innerHTML = 'An error occurred while checking the code.';
+    });
+}
   </script>
 </body>
 </html>
