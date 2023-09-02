@@ -223,8 +223,8 @@ app.get('/api/users/:userId', (req, res) => {
     return res.status(404).json({ error: 'User not found' });
   }
 
-  const { id, username, name, age, gender, skills, hobbies, school, residentialArea, passionateAbout, avatar } = user;
-  const userProfile = { id, username, name, age, gender, skills, hobbies, school, residentialArea, passionateAbout, avatar };
+  const { id, username, name, age, gender, skills, hobbies, school, residentialArea, passionateAbout, avatar, balance } = user;
+  const userProfile = { id, username, name, age, gender, skills, hobbies, school, residentialArea, passionateAbout, avatar, balance };
 
   res.json(userProfile);
 });
