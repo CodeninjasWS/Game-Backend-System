@@ -374,7 +374,7 @@ app.post('/api/update-points', (req, res) => {
   const { id, points } = req.body;
 
   // Read the leaderboard data from the JSON file
-  const leaderboardData = JSON.parse(fs.readFileSync('leaderboard.json', 'utf8'));
+  const leaderboardData = JSON.parse(fs.readFileSync('/home/cnwestsprings/game-backend-system/leaderboard.json', 'utf8'));
 
   // Find the user by their ID
   const user = leaderboardData.find((user) => user.id === id);
@@ -394,7 +394,7 @@ app.post('/api/update-points', (req, res) => {
   }
 
   // Save the updated leaderboard data back to the JSON file
-  fs.writeFileSync('leaderboard.json', JSON.stringify(leaderboardData, null, 2));
+  fs.writeFileSync('/home/cnwestsprings/game-backend-system/leaderboard.json', JSON.stringify(leaderboardData, null, 2));
 
   res.json({ message: 'Points updated successfully' });
 });
