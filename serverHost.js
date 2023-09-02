@@ -6,7 +6,15 @@ const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcryptjs');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+var logFile = fs.createWriteStream('log.txt', { flags: 'a' });
+  // Or 'w' to truncate the file every time the process starts.
+var logStdout = process.stdout;
 
+console.log = function () {
+  logFile.write(util.format.apply(null, arguments) + '\n');
+  logStdout.write(util.format.apply(null, arguments) + '\n');
+}
+console.error = console.log;
 const app = express();
 app.use(cookieParser());
 app.set('view engine', 'ejs');
