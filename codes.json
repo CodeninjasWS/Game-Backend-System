@@ -1,7 +1,8 @@
 [
   {
     "code": "123",
-    "value": "100"
+    "value": "100",
+    "used": true
   },
   {
     "code": "100",

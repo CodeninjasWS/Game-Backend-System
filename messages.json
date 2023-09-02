@@ -2,9 +2,9 @@
     "success": true,
     "messages": [
       {
-        "title": "Test Message to show that the server is working.",
-        "published_at": "Time",
-        "body": "Body",
+        "title": "Welcome! You are one of the first to use this site!.",
+        "published_at": "Sat Sept 2, 4:56 PM MT",
+        "body": "Yahoo! It works!",
         "summary": "Today we're releasing a new level called Whiteridge.\r\n\r\nWhiteridge is an urban level with lots of jumps and features to hit.",
         "category": "levels",
         "alert": true,

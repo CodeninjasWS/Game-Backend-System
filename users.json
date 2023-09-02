@@ -3,13 +3,13 @@
     "username": "test",
     "password": "$2a$10$xDrUJ6J4UtM7iJk85J0GwuFSaeXHZZmZ6WIkofQD1Z5eLwW./z6PW",
     "id": "1",
-    "balance": "0"
+    "balance": 100
   },
   {
     "username": "NULL, There was an error loading user data!",
     "password": "$2a$10$xDrUJ6J4UtM7iJk85J0GwuFSaeXHZZmZ6WIkofQD1Z5eLwW./z6PW",
     "id": "null",
-    "balance":"0"
+    "balance": "0"
   },
   {
     "username": "6E2S34LH",
@@ -1445,5 +1445,29 @@
     "username": "test2",
     "password": "$2a$10$DzWH/nQ/8AmjPN6IcU4YLOUykNMkLEXns.PVXxS060G/rluELapZi",
     "id": "2f735736-6337-4728-96c0-240846b68af0"
+  },
+  {
+    "username": "QZTA",
+    "password": "$2a$10$BNp/H.lUOubvCSvrE/KZ0.lQKFEud9qCELpC8E04FOnuhZiu5lnda",
+    "guest": true,
+    "id": "2f3628a9-ef8c-49d8-8472-46186c48c088"
+  },
+  {
+    "username": "0HOG",
+    "password": "$2a$10$fI/AmvN/RhOyeDM4hoEjMujsKaRlI2fK2RQbT3rzOXf5K3I.2T/qm",
+    "guest": true,
+    "id": "7c14e1ed"
+  },
+  {
+    "username": "SMHB",
+    "password": "$2a$10$os2tmMcmpIJFlhmbloTb1uvkdJUQYyanDujtddzjjJvuiGkuk5C.K",
+    "guest": true,
+    "id": "db1b6443"
+  },
+  {
+    "username": "P66L",
+    "password": "$2a$10$nnHv/qVkjc.LitPHbx3v4.PPFAWpuYMldCPZ1t2SP1WnLod/Rynsu",
+    "guest": true,
+    "id": "99bb8d8a"
   }
 ]
