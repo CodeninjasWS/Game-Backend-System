@@ -51,6 +51,73 @@ app.get('/api/upcoming-missions', (req, res) => {
 // Initialize users as an empty array
 let users = [];
 
+app.post('/api/guest', async (req, res) => {
+  console.log('Received guest user registration request:', req.body);
+
+  try {
+    // Read the existing users from the JSON file
+    const usersData = fs.readFileSync('users.json', 'utf8');
+    const users = JSON.parse(usersData);
+
+    // Generate a random 4-character alphanumeric username for guest user
+    const randomUsername = generateRandomUsername(users);
+
+    // Default password is "1234"
+    const defaultPassword = '1234';
+
+    // Create a new guest user with the random username and default password
+    const newGuestUser = {
+      username: randomUsername,
+      password: defaultPassword,
+      guest: true, // Indicate that this is a guest user
+    };
+
+    // Hash the default password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newGuestUser.password, salt);
+
+    // Update the password with the hashed version
+    newGuestUser.password = hashedPassword;
+
+    // Generate a unique ID for the new guest user
+    newGuestUser.id = uuidv4();
+
+    // Add the new guest user to the users array
+    users.push(newGuestUser);
+
+    // Save the updated users array to the JSON file
+    fs.writeFile('users.json', JSON.stringify(users, null, 2), (err) => {
+      if (err) {
+        console.error('Error writing users file:', err);
+        return res.status(500).json({ error: 'Internal server error' });
+      }
+    });
+
+    console.log('Guest user registration successful:', newGuestUser);
+
+    res.json({ message: 'Guest user registration successful', newGuestUser });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Function to generate a random 4-character alphanumeric username
+function generateRandomUsername(users) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let randomUsername = '';
+
+  do {
+    randomUsername = '';
+    for (let i = 0; i < 4; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      randomUsername += characters.charAt(randomIndex);
+    }
+  } while (users.some((user) => user.username === randomUsername));
+
+  return randomUsername;
+}
+
 app.post('/api/users', async (req, res) => {
   console.log('Received user registration request:', req.body);
 
