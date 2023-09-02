@@ -11,10 +11,12 @@
   },
   {
     "code": "101",
-    "value": "100"
+    "value": "100",
+    "used": true
   },
   {
     "code": "102",
-    "value": "100"
+    "value": "100",
+    "used": true
   }
 ]
