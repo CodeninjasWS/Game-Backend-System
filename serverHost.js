@@ -328,6 +328,46 @@ app.post('/api/upcoming-missions', (req, res) => {
   res.json({ message: 'Upcoming mission added successfully', mission: newMission });
 });
 
+app.post('/api/add-balance', (req, res) => {
+  const { username, code } = req.body;
+
+  // Read the codes and users data from JSON files
+  const codesData = JSON.parse(fs.readFileSync('/home/cnwestsprings/game-backend-system/codes.json', 'utf8'));
+  const usersData = JSON.parse(fs.readFileSync('/home/cnwestsprings/game-backend-system/users.json', 'utf8'));
+
+  // Find the user by username
+  const user = usersData.find((user) => user.username === username);
+
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+
+  // Find the code by its value
+  const codeEntry = codesData.find((entry) => entry.code === code);
+
+  if (!codeEntry) {
+    return res.status(404).json({ error: 'Code not found' });
+  }
+
+  // Check if the code is already used
+  if (codeEntry.used) {
+    return res.status(400).json({ error: 'Code already used' });
+  }
+
+  // Add the code's value to the user's balance
+  const codeValue = parseFloat(codeEntry.value); // Parse value as a float
+  user.balance += codeValue;
+
+  // Mark the code as used
+  codeEntry.used = true;
+
+  // Save the updated data back to the JSON files
+  fs.writeFileSync('/home/cnwestsprings/game-backend-system/codes.json', JSON.stringify(codesData, null, 2));
+  fs.writeFileSync('/home/cnwestsprings/game-backend-system/users.json', JSON.stringify(usersData, null, 2));
+
+  res.json({ message: 'Balance added successfully', user });
+});
+
 
 // Start the server
 app.listen(80, () => {
