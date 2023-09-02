@@ -354,9 +354,10 @@ app.post('/api/add-balance', (req, res) => {
     return res.status(400).json({ error: 'Code already used' });
   }
 
-  // Add the code's value to the user's balance
+  // Get the user's current balance and add the code's value to it
   const codeValue = parseFloat(codeEntry.value); // Parse value as a float
-  user.balance += codeValue;
+  const currentBalance = parseFloat(user.balance); // Parse current balance as a float
+  user.balance = currentBalance + codeValue;
 
   // Mark the code as used
   codeEntry.used = true;
@@ -367,6 +368,7 @@ app.post('/api/add-balance', (req, res) => {
 
   res.json({ message: 'Balance added successfully', user });
 });
+
 
 
 // Start the server
