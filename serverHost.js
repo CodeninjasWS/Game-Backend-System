@@ -80,7 +80,7 @@ app.post('/api/guest', async (req, res) => {
     newGuestUser.password = hashedPassword;
 
     // Generate a unique ID for the new guest user
-    newGuestUser.id = uuidv4();
+    newGuestUser.id = uuidv4().split('-')[0];
 
     // Add the new guest user to the users array
     users.push(newGuestUser);
@@ -143,7 +143,7 @@ app.post('/api/users', async (req, res) => {
     newUser.password = hashedPassword;
 
     // Generate a unique ID for the new user
-    newUser.id = uuidv4();
+    newUser.id = uuidv4().split('-')[0];
 
     // Add the new user to the users array
     users.push(newUser);
