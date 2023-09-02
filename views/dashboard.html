@@ -119,6 +119,7 @@
     <nav>
       <a class="dashboard-link" href="missions.html">Missions</a>
       <a class="dashboard-link" href="leaderboard.html">Leaderboard</a>
+      <button onclick="logout()">Logout</button>
     </nav>
 
     <div id="stats-container">
@@ -259,6 +260,10 @@
       codeResult.innerHTML = 'An error occurred while checking the code.';
     });
 }
+function logout() {
+    document.cookie = 'userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    window.location.href("index.html"); // Refresh the page after logout
+  }
   </script>
 </body>
 </html>

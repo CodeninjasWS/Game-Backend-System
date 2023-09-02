@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Register</title>
-  <!-- Google tag (gtag.js) -->
+<!-- saved from url=(0014)about:internet -->
+<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-5V3HV4NYCM"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -11,72 +9,111 @@
 
   gtag('config', 'G-5V3HV4NYCM');
 </script>
-  <style>
-    .error {
-      color: red;
-    }
-  </style>
+<html lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>HG - Register</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="./IMPACT_files/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="https://assets.codeninjas.com/page-susi/assets/favicon.ico" rel="icon" type="image/x-icon">
+  <link href="css/login.css" rel="stylesheet" type="text/css">
+  <img data-tenant-branding-background="true" src="./IMPACT_files/main-bg.png" alt="Illustration">
 </head>
 <body>
-  <h1>Register</h1>
-  <form id="registerForm">
-    <div>
-      <label for="username">Username:</label>
-      <input type="text" id="username" required>
+  <div class="container unified_container" role="presentation">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <h2 class="portal-title">HungryGiraffe Games Portal</h2>
+            <div id="api" data-name="Unified">
+              <div class="heading">
+                <h1 role="heading">Registration</h1>
+              </div>
+              <form id="localAccountForm" action="JavaScript:void(0);" class="localAccount" aria-label="Register with your email address">
+                <div class="intro">
+                  <h2 aria-level="1">
+                    Register with a username.
+                  </h2>
+                </div>
+                <div class="error pageLevel" aria-hidden="true" role="alert" style="display: none;">
+                  <p></p>
+                </div>
+                <div class="entry">
+                  <div class="entry-item">
+                    <label for="email">
+                      Email Address
+                    </label>
+                    <div class="error itemLevel" aria-hidden="true" role="alert" style="display: none;">
+                      <p></p>
+                    </div>
+                    <input type="text" id="username" name="Username" placeholder="Username" aria-label="Username">
+                  </div>
+                  <div class="entry-item">
+                    <div class="password-label">
+                      <label for="password">Password</label>
+                      <div class="error itemLevel" aria-hidden="true" style="display: none;">
+                        <p role="alert"></p>
+                      </div>
+                      <input type="password" id="password" name="Password" placeholder="Password" aria-label="Password" autocomplete="current-password" aria-required="true">
+                    </div>
+                    <div class="working"></div>
+                    <div class="buttons">
+                      <button id="next" type="submit" form="localAccountForm">Register</button>
+                    </div>
+                    <a href="index.html" > Login </a>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div>
-      <label for="password">Password:</label>
-      <input type="password" id="password" required>
-    </div>
-    <div>
-      <button type="submit">Register</button>
-    </div>
-  </form>
-
-  <div id="errorMessage" class="error"></div>
+  </div>
 
   <script>
-    const registerForm = document.getElementById('registerForm');
-const errorMessage = document.getElementById('errorMessage');
+    const registerForm = document.getElementById('localAccountForm');
+    const errorMessage = document.getElementById('errorMessage');
 
-registerForm.addEventListener('submit', (event) => {
-  event.preventDefault();
+    registerForm.addEventListener('submit', (event) => {
+      event.preventDefault();
 
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
 
-  if (!username || !password) {
-    errorMessage.textContent = 'Please fill in both username and password fields.';
-    return;
-  }
-
-  const userData = {
-    username: username,
-    password: password,
-  };
-
-  fetch('https://api.hungrygiraffe.xyz/api/users', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(userData),
-  })
-    .then((response) => {
-      if (response.ok) {
-        window.location.href = '/dashboard.html'; // Redirect to dashboard on successful registration
-      } else {
-        response.json().then((data) => {
-          errorMessage.textContent = data.error;
-        });
+      if (!username || !password) {
+        errorMessage.textContent = 'Please fill in both username and password fields.';
+        return;
       }
-    })
-    .catch((error) => {
-      errorMessage.textContent = 'An error occurred during registration.';
-      console.error(error);
-    });
-});
 
+      const userData = {
+        username: username,
+        password: password,
+      };
+
+      fetch('https://api.hungrygiraffe.xyz/api/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      })
+        .then((response) => {
+          if (response.ok) {
+            window.location.href = '/dashboard.html'; // Redirect to dashboard on successful registration
+          } else {
+            response.json().then((data) => {
+              errorMessage.textContent = data.error;
+            });
+          }
+        })
+        .catch((error) => {
+          errorMessage.textContent = 'An error occurred during registration.';
+          console.error(error);
+        });
+    });
   </script>
 </body>
 </html>
