@@ -18,6 +18,59 @@ app.use(cors({
   credentials: true,
 }));
 
+// Endpoint to save player data based on user ID
+app.post('/api/save-player/:userId', (req, res) => {
+  const userId = req.params.userId;
+  const playerData = req.body;
+
+  try {
+    // Read existing player data from the JSON file
+    const playersData = JSON.parse(fs.readFileSync('players.json', 'utf8'));
+
+    // Check if player data already exists for the given user ID
+    const existingPlayerIndex = playersData.findIndex(player => player.userId === userId);
+
+    if (existingPlayerIndex !== -1) {
+      // If player data exists, update it
+      playersData[existingPlayerIndex] = { userId, ...playerData };
+    } else {
+      // If player data doesn't exist, create a new entry
+      playersData.push({ userId, ...playerData });
+    }
+
+    // Write updated player data back to the JSON file
+    fs.writeFileSync('players.json', JSON.stringify(playersData, null, 2));
+
+    res.json({ message: 'Player data saved successfully' });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Endpoint to retrieve player data based on user ID
+app.get('/api/player/:userId', (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    // Read player data from the JSON file
+    const playersData = JSON.parse(fs.readFileSync('players.json', 'utf8'));
+
+    // Find player data for the given user ID
+    const player = playersData.find(player => player.userId === userId);
+
+    if (!player) {
+      // If player data doesn't exist, return an error
+      return res.status(404).json({ error: 'Player data not found' });
+    }
+
+    res.json(player);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 
 app.get('/api/missions', (req, res) => {
     const missions = JSON.parse(fs.readFileSync('missions.json'));
